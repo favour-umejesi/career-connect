@@ -1,0 +1,15 @@
+{
+  "name": "career-connect",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Career Connect: Grambling State University Professional Development Center ambassador request site",
+  "type": "module",
+  "scripts": {
+    "dev": "netlify dev",
+    "serve": "python3 -m http.server 8080"
+  },
+  "dependencies": {
+    "nodemailer": "^6.9.0",
+    "resend": "^4.0.0"
+  }
+}

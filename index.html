@@ -1,0 +1,106 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Book a virtual resume review with a trained Grambling State University student ambassador." />
+    <title>Career Connect | Resume Reviews</title>
+    <link rel="icon" type="image/png" href="assets/brand/gsu-g-logo.png" />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Open+Sans:wght@400;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="assets/brand/tokens.css" />
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <a class="skip-link" href="#ambassadors">Skip to ambassadors</a>
+
+    <header class="masthead">
+      <div class="brand">
+        <a class="brand-logo" href="https://www.gram.edu" aria-label="Grambling State University website">
+          <img src="assets/brand/gsu-g-logo.png" alt="Grambling State University G logo" width="52" height="33" />
+        </a>
+        <a class="brand-name" href="#top">Career Connect</a>
+      </div>
+      <button class="nav-toggle" type="button" aria-expanded="false" aria-controls="primaryNav">Menu</button>
+      <nav id="primaryNav" aria-label="Primary navigation">
+        <a href="#ambassadors">Find a reviewer</a>
+        <a href="#how-it-works">How it works</a>
+      </nav>
+    </header>
+
+    <main id="top">
+      <section class="intro" aria-labelledby="page-title">
+        <div class="intro-copy">
+          <p class="kicker">Student-to-student support</p>
+          <h1 id="page-title">Your next opportunity starts with a <span class="light">stronger story.</span></h1>
+          <p class="intro-text">Choose a student ambassador and send a personal meeting request. You and the ambassador can decide on a virtual time together.</p>
+          <a class="button button-gold" href="#ambassadors">Find an ambassador</a>
+        </div>
+        <figure class="intro-media">
+          <div class="photo"><img src="assets/img/gsu-students-team-collaboration.png" alt="Grambling State University students collaborating around laptops in the student center" width="1024" height="683" /></div>
+          <figcaption>Peer guidance. Real momentum.</figcaption>
+        </figure>
+      </section>
+
+      <section class="promise" aria-label="Service overview">
+        <p><strong>Flexible.</strong> Connect without calendar restrictions.</p>
+        <p><strong>Personal.</strong> Choose the ambassador you want.</p>
+        <p><strong>Private.</strong> Contact details stay hidden.</p>
+      </section>
+
+      <section class="finder" id="ambassadors" aria-labelledby="finder-heading">
+        <div class="section-head">
+          <p class="kicker">Virtual resume reviews</p>
+          <h2 id="finder-heading">Meet the ambassadors.</h2>
+          <p class="match-line"><span id="matchCount">8</span> ambassadors match</p>
+        </div>
+
+        <div class="filters" aria-label="Filter ambassadors">
+          <input id="searchInput" class="search-input" type="search" placeholder="Search ambassadors by name" aria-label="Search ambassadors" autocomplete="off" />
+        </div>
+
+        <div class="results-layout">
+          <div class="ambassador-list" id="ambassadorList" aria-live="polite"></div>
+          <aside class="booking-panel" id="bookingPanel" aria-live="polite"></aside>
+        </div>
+      </section>
+
+      <section class="how-it-works" id="how-it-works" aria-labelledby="how-title">
+        <div class="section-head">
+          <p class="kicker">A simple handoff</p>
+          <h2 id="how-title">Good feedback changes more than a r&eacute;sum&eacute;.</h2>
+        </div>
+        <div class="process-layout">
+          <figure class="support-image">
+            <div class="photo"><img src="assets/img/gsu-students-walking-clipboards.png" alt="Grambling State University students walking across campus with clipboards" width="1024" height="683" loading="lazy" /></div>
+            <figcaption>Build clarity. Gain confidence. Move forward.</figcaption>
+          </figure>
+          <ol class="steps">
+            <li><h3>Pick your person</h3><p>Choose any student ambassador from the Professional Development Center team.</p></li>
+            <li><h3>Write your request</h3><p>Introduce yourself, explain what you need, and mention general availability if helpful.</p></li>
+            <li><h3>Send and coordinate</h3><p>Continue by email or text and agree on a virtual meeting time together.</p></li>
+          </ol>
+        </div>
+      </section>
+    </main>
+
+    <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+    <footer>
+      <div class="footer-left">
+        <a href="https://www.gram.edu" aria-label="Grambling State University website">
+          <img src="assets/brand/grambling-wordmark.png" alt="Grambling State University" width="150" height="37" />
+        </a>
+        <p><strong>Career Connect.</strong> A student-led service of the Professional Development Center at Grambling State University.</p>
+      </div>
+      <div class="footer-links">
+        <a href="#ambassadors">Find a reviewer</a>
+        <a href="#how-it-works">How it works</a>
+        <a href="https://www.gram.edu">gram.edu</a>
+      </div>
+    </footer>
+
+    <script src="app.js"></script>
+  </body>
+</html>

@@ -1,0 +1,60 @@
+/* Grambling State University brand tokens
+   Source: GSU Identity Standards v1.4.2 (revised 12/5/2024), Office of Strategic Communications and Marketing.
+   HEX/RGB values are the guide's digital values. PMS/CMYK are print-only and live in references/colors.md. */
+
+:root {
+  /* Primary */
+  --gsu-black: #191919;        /* PMS Process Black C  | RGB 29 29 29   */
+  --gsu-gold:  #EAAA00;        /* PMS 124 C            | RGB 234 170 0  */
+
+  /* Secondary (accent only; never the dominant color) */
+  --gsu-red:   #A6192E;        /* Power Red, PMS 187   | RGB 166 25 46  */
+
+  /* Tertiary */
+  --gsu-gold-light: #EFCC67;   /* RGB 239 204 103 */
+  --gsu-gold-pale:  #FAECC8;   /* RGB 250 236 200 */
+  --gsu-cream:      #EDEBDE;   /* guide lists RGB 251 241 213 next to this hex; hex is authoritative for web */
+  --gsu-gray-700:   #545454;   /* RGB 84 84 84   — secondary text on light */
+  --gsu-gray-300:   #D9D9D9;   /* RGB 217 217 217 — borders, soft text on dark */
+  --gsu-gray-100:   #F3F3F3;   /* RGB 243 243 243 — section surfaces */
+  --gsu-gray-50:    #F7F7F7;   /* RGB 247 247 247 — page background alt */
+  --gsu-white:      #FFFFFF;
+
+  /* Semantic aliases */
+  --color-bg:            var(--gsu-white);
+  --color-bg-alt:        var(--gsu-gray-100);
+  --color-bg-dark:       var(--gsu-black);
+  --color-text:          var(--gsu-black);
+  --color-text-muted:    var(--gsu-gray-700);
+  --color-text-on-dark:  var(--gsu-white);
+  --color-text-on-dark-soft: var(--gsu-gray-300);
+  --color-accent:        var(--gsu-gold);
+  --color-accent-strong: var(--gsu-red);
+  --color-border:        var(--gsu-gray-300);
+  --color-focus:         var(--gsu-gold);
+
+  /* Typography — Poppins is the brand's primary face for headlines AND body.
+     Open Sans / Arial / Helvetica are the guide's approved fallbacks.
+     Oswald is an approved alternate for condensed display use on the web.
+     Minion Pro (fallback Times New Roman) is print body copy only. */
+  --font-heading: "Poppins", "Open Sans", Arial, Helvetica, sans-serif;
+  --font-body:    "Poppins", "Open Sans", Arial, Helvetica, sans-serif;
+  --font-condensed: "Oswald", "Arial Narrow", Arial, sans-serif;
+  --font-serif:   "Minion Pro", "Times New Roman", Times, serif;
+
+  --weight-light: 300;
+  --weight-regular: 400;
+  --weight-medium: 500;
+  --weight-semibold: 600;
+  --weight-bold: 700;
+
+  /* Headlines are set in capitals per the guide */
+  --heading-transform: uppercase;
+  --heading-tracking: 0.02em;   /* keep tracking modest; the guide forbids excessive tracking */
+}
+
+/* Google Fonts import that matches the guide's approved faces:
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400&family=Open+Sans:wght@400;600;700&family=Oswald:wght@500;600;700&display=swap" rel="stylesheet">
+*/
