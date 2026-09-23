@@ -52,15 +52,13 @@ export default async (request) => {
     return json({ error: "The email relay is not configured yet." }, 503);
   }
 
-  const id = `PDC-${Math.random().toString(36).slice(2, 7).toUpperCase()}`;
-  const subject = `[Career Connect ${id}] ${helpType} request from ${studentName}`;
+  const subject = `Career Connect: ${helpType} request from ${studentName}`;
   const text = [
     `${studentName} is asking for help with: ${helpType}`,
     ``,
     message,
     ``,
-    `Reply to this email to reach ${studentName} directly at ${studentEmail}.`,
-    `Reference: ${id}`
+    `Reply to this email to reach ${studentName} directly at ${studentEmail}.`
   ].join("\n");
 
   try {
@@ -102,7 +100,7 @@ export default async (request) => {
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify({
         bot_id: ambassador.groupme,
-        text: `New Career Connect request (${id}) from ${studentName}: ${helpType}. Check your email to reply.`
+        text: `New Career Connect request from ${studentName}: ${helpType}. Check your email to reply.`
       })
     }).catch(err => console.error("GroupMe error", err));
   }
@@ -111,7 +109,7 @@ export default async (request) => {
   // verification), send here when channel === "text" && ambassador.phone is set.
   // For now a "text" choice still delivers by email plus the GroupMe ping above.
 
-  return json({ ok: true, id, delivered: { email: true, groupme: Boolean(ambassador.groupme), text: false, requestedChannel: channel } });
+  return json({ ok: true, delivered: { email: true, groupme: Boolean(ambassador.groupme), text: false, requestedChannel: channel } });
 };
 
 function clean(value, max) {

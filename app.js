@@ -223,7 +223,7 @@ async function handleSubmit(event) {
     const data = await response.json().catch(() => ({}));
     if (!response.ok) throw new Error(data.error || "We could not send your request. Please try again in a moment.");
 
-    sentRequest = { ...payload, id: data.id || `PDC-${Math.random().toString(36).slice(2, 7).toUpperCase()}` };
+    sentRequest = { ...payload };
     renderConfirmation(person);
     bookingPanel.scrollIntoView({ behavior: "smooth", block: "start" });
     showToast(`Request sent to ${person.name.split(" ")[0]}`);
