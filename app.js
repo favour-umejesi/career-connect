@@ -1,6 +1,12 @@
 /* Career Connect front end.
-   Ambassador contact details never appear here. The Netlify function
-   at /.netlify/functions/send-request looks them up server side. */
+   No ambassador email or phone number lives in this file. The roster is in
+   netlify/lib/contacts.mjs, which only the server-side functions can read.
+   send-request delivers email; contact-link hands the browser a phone number
+   only when a student opens that ambassador's panel, so the "Text in
+   Messages" button can open the phone's texting app.
+
+   textRelay: true for ambassadors who gave a number. The number itself stays
+   in the roster file. */
 
 const ambassadors = [
   { id: 1, name: "Anthony Blunt", emailRelay: true, textRelay: false },
@@ -15,6 +21,8 @@ const ambassadors = [
 
 const SCHOOL_DOMAIN = "gsumail.gram.edu";
 const ENDPOINT = "/.netlify/functions/send-request";
+const CONTACT_ENDPOINT = "/.netlify/functions/contact-link";
+const phoneCache = new Map();
 
 let selectedId = 1;
 let sentRequest = null;
@@ -27,6 +35,54 @@ function selectedAmbassador() {
 
 function escapeHtml(value) {
   return String(value).replace(/[&<>'"]/g, c => ({ "&": "&amp;", "<": "&lt;", ">": "&gt;", "'": "&#39;", '"': "&quot;" })[c]);
+}
+
+/* Direct texting. An sms: link opens Messages on iPhone and Mac (iMessage or
+   SMS, the phone decides) and the default texting app on Android, with the
+   body already typed. "?&body=" is the one form both platforms accept. */
+function smsLink(person, phone, studentName, message) {
+  const first = person.name.split(" ")[0];
+  const intro = studentName ? `Hi ${first}, this is ${studentName} from Career Connect. ` : `Hi ${first}, I found you on Career Connect. `;
+  return `sms:${phone}?&body=${encodeURIComponent(intro + message)}`;
+}
+
+/* Asks the relay for the number. Resolves null when the ambassador has no
+   number or the relay is not deployed, and the panel stays email only. */
+async function fetchPhone(person) {
+  if (!person.textRelay) return null;
+  if (phoneCache.has(person.id)) return phoneCache.get(person.id);
+  try {
+    const response = await fetch(`${CONTACT_ENDPOINT}?id=${person.id}`);
+    const data = response.ok ? await response.json() : {};
+    const phone = /^\+\d{8,15}$/.test(data.phone || "") ? data.phone : null;
+    phoneCache.set(person.id, phone);
+    return phone;
+  } catch {
+    return null;
+  }
+}
+
+/* A vCard the student can save so the thread shows the ambassador's name.
+   iPhone opens it as a contact preview; Android and desktop download it. */
+function vcardLink(person, phone) {
+  const parts = person.name.split(" ");
+  const last = parts.pop();
+  const card = [
+    "BEGIN:VCARD",
+    "VERSION:3.0",
+    `N:${last};${parts.join(" ")};;;`,
+    `FN:${person.name}`,
+    "ORG:Grambling State University;Professional Development Center",
+    "TITLE:Student Ambassador",
+    `TEL;TYPE=CELL:${phone}`,
+    "NOTE:Career Connect resume review ambassador",
+    "END:VCARD"
+  ].join("\r\n");
+  return `data:text/vcard;charset=utf-8,${encodeURIComponent(card)}`;
+}
+
+function vcardFilename(person) {
+  return person.name.toLowerCase().replace(/[^a-z0-9]+/g, "-").replace(/(^-|-$)/g, "") + ".vcf";
 }
 
 let renderAmbassadors = function () {
@@ -83,10 +139,39 @@ function renderMessagePanel() {
       <label>Your message<textarea id="requestMessage" name="message" rows="6" required>I would like help reviewing my resume and would like to find a virtual meeting time that works for both of us.</textarea></label>
       <div id="formError" class="form-error" hidden></div>
       <button class="button button-gold full" id="secureSendButton" type="submit">Send securely through Career Connect</button>
-      <p class="trust-note">Neither person&rsquo;s email address or phone number appears in the conversation. Replies come to your university email.</p>
+      <div id="directSlot"></div>
+      <p class="trust-note" id="trustNote">Neither person&rsquo;s email address or phone number appears in the conversation. Replies come to your university email.</p>
     </form>`;
 
-  document.querySelector("#messageForm").addEventListener("submit", handleSubmit);
+  const form = document.querySelector("#messageForm");
+  form.addEventListener("submit", handleSubmit);
+  if (person.textRelay) addDirectText(form, person);
+}
+
+/* Fills the slot under the send button once the relay confirms a number.
+   The number is never printed; it only rides inside the two links. */
+async function addDirectText(form, person) {
+  const phone = await fetchPhone(person);
+  if (!phone || !form.isConnected || selectedId !== person.id) return;
+  const first = person.name.split(" ")[0];
+
+  form.querySelector("#directSlot").innerHTML = `
+    <div class="or-divider" aria-hidden="true"><span>or</span></div>
+    <div class="direct-text">
+      <a class="button button-black full" id="textLink" href="#">Text ${escapeHtml(first)} in Messages</a>
+      <p class="field-hint">Opens iMessage or your texting app with your message already typed. Works from your phone or a Mac.</p>
+      <a class="contact-link" id="vcardLink" href="${vcardLink(person, phone)}" download="${vcardFilename(person)}">Save ${escapeHtml(first)} to Contacts</a>
+    </div>`;
+  form.querySelector("#trustNote").textContent = `Your email stays private when you use the secure send. Texting shares your number with ${first}, the same as any text.`;
+
+  const textLink = form.querySelector("#textLink");
+  const refreshTextLink = () => {
+    textLink.href = smsLink(person, phone, form.studentName.value.trim(), form.message.value.trim());
+  };
+  refreshTextLink();
+  form.studentName.addEventListener("input", refreshTextLink);
+  form.message.addEventListener("input", refreshTextLink);
+  textLink.addEventListener("click", () => showToast(`Opening Messages for ${first}`));
 }
 
 function renderConfirmation(person) {

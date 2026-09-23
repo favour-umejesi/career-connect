@@ -1,6 +1,6 @@
 /* Career Connect relay.
    Receives a student's request, looks up the chosen ambassador's private
-   contact details from environment variables, and delivers the message.
+   contact details from netlify/lib/contacts.mjs, and delivers the message.
 
    Pick ONE sender. Set its variables in Netlify > Site configuration > Environment variables.
 
@@ -12,15 +12,15 @@
      RESEND_API_KEY        Resend API key
      FROM_EMAIL            e.g. "Career Connect <careerconnect@yourdomain.org>"
 
-   Always:
-     AMBASSADOR_CONTACTS   JSON: {"1":{"email":"a@gsumail.gram.edu","groupme":"<bot id>"}, "2":{...}}
    Optional:
      SCHOOL_DOMAIN         student email domain, defaults to gsumail.gram.edu
      COPY_TO               a PDC coordinator address that receives a copy of every request
+     AMBASSADOR_CONTACTS   JSON override of the roster in netlify/lib/contacts.mjs
 */
 
 import { Resend } from "resend";
 import nodemailer from "nodemailer";
+import { contacts } from "../lib/contacts.mjs";
 
 const SCHOOL_DOMAIN = process.env.SCHOOL_DOMAIN || "gsumail.gram.edu";
 const json = (body, status = 200) => new Response(JSON.stringify(body), { status, headers: { "Content-Type": "application/json" } });
@@ -43,9 +43,7 @@ export default async (request) => {
     return json({ error: `Please use your @${SCHOOL_DOMAIN} email address.` }, 400);
   }
 
-  let contacts;
-  try { contacts = JSON.parse(process.env.AMBASSADOR_CONTACTS || "{}"); } catch { contacts = {}; }
-  const ambassador = contacts[ambassadorId];
+  const ambassador = contacts()[ambassadorId];
   if (!ambassador || !ambassador.email) return json({ error: "That ambassador is not set up to receive requests yet." }, 400);
 
   const useGmail = Boolean(process.env.GMAIL_USER && process.env.GMAIL_APP_PASSWORD);

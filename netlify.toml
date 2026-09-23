@@ -5,6 +5,13 @@
 [functions]
   node_bundler = "esbuild"
 
+# The site publishes from the repo root, so block the server-side folder as a static path.
+[[redirects]]
+  from = "/netlify/*"
+  to = "/"
+  status = 404
+  force = true
+
 [[headers]]
   for = "/*"
   [headers.values]

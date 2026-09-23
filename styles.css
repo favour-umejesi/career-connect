@@ -112,6 +112,12 @@ nav a:hover { border-bottom-color: var(--gsu-black); }
 .message-form .channel-option.disabled { color: var(--gsu-gray-700); border-color: var(--gsu-gray-300); cursor: not-allowed; }
 .message-form .channel-option input { width: auto; accent-color: var(--gsu-black); margin: 0; }
 .trust-note { color: var(--gsu-gray-700); font-size: .82rem; }
+.or-divider { display: flex; align-items: center; gap: 12px; color: var(--gsu-gray-700); font-size: .8rem; text-transform: uppercase; letter-spacing: .08em; }
+.or-divider::before, .or-divider::after { content: ""; flex: 1; border-top: 1px solid var(--gsu-gray-300); }
+.direct-text { display: grid; gap: 10px; }
+.direct-text .button { display: block; }
+.contact-link { justify-self: start; font-size: .88rem; font-weight: 600; color: var(--gsu-black); text-decoration: underline; text-underline-offset: 3px; text-decoration-color: var(--gsu-gold); }
+.contact-link:hover { text-decoration-thickness: 2px; }
 .form-error { border-left: 4px solid var(--gsu-red); background: var(--gsu-gray-50); padding: 12px 14px; font-size: .9rem; }
 
 .confirmation { display: grid; gap: 14px; }
