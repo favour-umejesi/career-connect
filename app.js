@@ -182,10 +182,8 @@ function renderConfirmation(person) {
       <p>Student Ambassador</p>
     </div>
     <div class="confirmation" role="status">
-      <h3>Request sent to ${escapeHtml(first)}.</h3>
-      <p class="ref">Reference number <strong>${escapeHtml(sentRequest.id)}</strong></p>
-      <p>${escapeHtml(first)} received your message by ${sentRequest.channel === "text" ? "text and email" : "email"} and replies to <strong>${escapeHtml(sentRequest.studentEmail)}</strong>. Most ambassadors answer within two business days. Check junk mail if nothing arrives.</p>
-      <div class="summary">${escapeHtml(sentRequest.message)}</div>
+      <h3>Sent to ${escapeHtml(first)}.</h3>
+      <p>Watch <strong>${escapeHtml(sentRequest.studentEmail)}</strong> for a reply, usually within two business days.</p>
       <button class="button button-black full" type="button" id="newRequestButton">Send another request</button>
     </div>`;
   document.querySelector("#newRequestButton").addEventListener("click", () => {

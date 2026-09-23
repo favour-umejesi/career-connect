@@ -123,9 +123,7 @@ nav a:hover { border-bottom-color: var(--gsu-black); }
 .confirmation { display: grid; gap: 14px; }
 .confirmation h3 { font-size: 1.6rem; font-weight: 600; }
 .confirmation p { color: var(--gsu-gray-700); font-size: .95rem; }
-.confirmation .ref { padding: 12px 14px; border: 1px solid var(--gsu-black); font-size: .95rem; }
-.confirmation .ref strong { font-family: var(--font-condensed); font-size: 1.3rem; font-weight: 600; margin-left: 8px; color: var(--gsu-black); }
-.confirmation .summary { padding: 12px 14px; background: var(--gsu-gray-50); white-space: pre-wrap; font-size: .95rem; color: var(--gsu-black); }
+.confirmation p strong { color: var(--gsu-black); }
 
 /* How it works */
 .process-layout { display: grid; grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr); gap: clamp(40px, 6vw, 96px); align-items: start; }
