@@ -38,7 +38,7 @@ You need one sending account. The Gmail route needs no domain and takes about te
 
 ### Option A: Gmail (recommended for a volunteer-run site)
 
-1. Create a free Gmail account for the program, for example `gsucareerconnect@gmail.com`. Do not use a personal account.
+1. Create a free Gmail account for the program. Do not use a personal account.
 2. In that account, open Google Account, then Security, and turn on 2-Step Verification.
 3. Still under Security, search for "App passwords," create one named "Career Connect," and copy the 16-character password Google shows.
 4. In Netlify, open the site, then Site configuration, then Environment variables. Add:

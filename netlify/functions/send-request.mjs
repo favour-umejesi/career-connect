@@ -5,7 +5,7 @@
    Pick ONE sender. Set its variables in Netlify > Site configuration > Environment variables.
 
    Option A, Gmail (no domain needed):
-     GMAIL_USER            the Gmail address that sends, e.g. gsucareerconnect@gmail.com
+     GMAIL_USER            the program Gmail address that sends
      GMAIL_APP_PASSWORD    a 16-character App Password from that Google account
 
    Option B, Resend (needs a domain you can add DNS records to):
